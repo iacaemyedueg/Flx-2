@@ -2,7 +2,7 @@ import React from 'react';
 
 export const MusicBanner = () => {
   return (
-    <section className="container mx-auto px-4 mb-16">
+    <section className="max-w-[95%] mx-auto px-4 mb-16">
       <div className="bg-black rounded-sm p-6 md:p-10 flex flex-col md:flex-row items-center gap-8 relative overflow-hidden">
         <div className="flex-1 z-10">
           <span className="text-[#00FF66] font-semibold mb-4 block">Categories</span>

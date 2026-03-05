@@ -6,11 +6,11 @@ export const PRODUCTS: Product[] = [
   // Flash Sales / Popular
   {
     id: 1,
-    title: "HAVIT HV-G92 Gamepad",
-    price: 120,
-    description: "Gamepad with ergonomic design",
+    title: "AK-900 Wired Keyboard",
+    price: 960,
+    description: "Mechanical gaming keyboard",
     category: "gaming",
-    image: "https://m.media-amazon.com/images/I/61sQkH1sWvL._AC_SX679_.jpg", // Red gamepad
+    image: "https://storage.googleapis.com/birdview-sandbox-v2-221511-europe-west2-a/67c7d678680650002c9a9244/67c7d79d680650002c9a9261/input_file_0.png", // Keyboard
     rating: { rate: 5, count: 88 }
   },
   {
@@ -19,7 +19,7 @@ export const PRODUCTS: Product[] = [
     price: 960,
     description: "Mechanical gaming keyboard",
     category: "gaming",
-    image: "https://m.media-amazon.com/images/I/71fC9l2A1BL._AC_SX679_.jpg", // RGB Keyboard
+    image: "https://storage.googleapis.com/birdview-sandbox-v2-221511-europe-west2-a/67c7d678680650002c9a9244/67c7d67c680650002c9a924d/input_file_3.png", // RGB Keyboard
     rating: { rate: 4, count: 75 }
   },
   {
@@ -28,7 +28,7 @@ export const PRODUCTS: Product[] = [
     price: 370,
     description: "High refresh rate monitor",
     category: "gaming",
-    image: "https://m.media-amazon.com/images/I/71s7HbyAsEL._AC_SX679_.jpg", // Monitor
+    image: "https://storage.googleapis.com/birdview-sandbox-v2-221511-europe-west2-a/67c7d678680650002c9a9244/67c7d67c680650002c9a924d/input_file_2.png", // Monitor
     rating: { rate: 5, count: 99 }
   },
   {
@@ -37,7 +37,7 @@ export const PRODUCTS: Product[] = [
     price: 375,
     description: "Ergonomic chair for long sessions",
     category: "furniture",
-    image: "https://m.media-amazon.com/images/I/61sXjD5CqCL._AC_SX679_.jpg", // Chair
+    image: "https://storage.googleapis.com/birdview-sandbox-v2-221511-europe-west2-a/67c7d678680650002c9a9244/67c7d67c680650002c9a924d/input_file_1.png", // Chair
     rating: { rate: 4.5, count: 99 }
   },
   // Best Selling
@@ -47,7 +47,7 @@ export const PRODUCTS: Product[] = [
     price: 260,
     description: "Warm winter coat",
     category: "clothing",
-    image: "https://fakestoreapi.com/img/51Y5NI-I5jL._AC_UX679_.jpg", // Pink coat placeholder
+    image: "https://storage.googleapis.com/birdview-sandbox-v2-221511-europe-west2-a/67c7d678680650002c9a9244/67c7d9f7680650002c9a9284/input_file_3.png", // Jacket
     rating: { rate: 5, count: 65 }
   },
   {
@@ -56,7 +56,7 @@ export const PRODUCTS: Product[] = [
     price: 960,
     description: "Luxury travel bag",
     category: "accessories",
-    image: "https://m.media-amazon.com/images/I/711T2+9nO+L._AC_SX679_.jpg", // Bag
+    image: "https://storage.googleapis.com/birdview-sandbox-v2-221511-europe-west2-a/67c7d678680650002c9a9244/67c7d9f7680650002c9a9284/input_file_2.png", // Bag
     rating: { rate: 4.5, count: 65 }
   },
   {
@@ -65,7 +65,7 @@ export const PRODUCTS: Product[] = [
     price: 160,
     description: "Keep your PC cool",
     category: "electronics",
-    image: "https://m.media-amazon.com/images/I/61X4X-eA2iL._AC_SX679_.jpg", // Cooler
+    image: "https://storage.googleapis.com/birdview-sandbox-v2-221511-europe-west2-a/67c7d678680650002c9a9244/67c7d9f7680650002c9a9284/input_file_1.png", // Cooler
     rating: { rate: 4.5, count: 65 }
   },
   {
@@ -74,7 +74,7 @@ export const PRODUCTS: Product[] = [
     price: 360,
     description: "Wooden bookshelf",
     category: "furniture",
-    image: "https://m.media-amazon.com/images/I/71+pOdQ7iKL._AC_SX679_.jpg", // Shelf
+    image: "https://storage.googleapis.com/birdview-sandbox-v2-221511-europe-west2-a/67c7d678680650002c9a9244/67c7d9f7680650002c9a9284/input_file_0.png", // Shelf
     rating: { rate: 5, count: 65 }
   },
   // Explore

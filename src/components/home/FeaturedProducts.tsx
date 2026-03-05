@@ -27,7 +27,7 @@ export const FeaturedProducts = () => {
 
   return (
     <section className="py-16 bg-gray-50">
-      <div className="container mx-auto px-4">
+      <div className="max-w-[95%] mx-auto px-4">
         <div className="flex justify-between items-end mb-10">
           <div>
             <h2 className="text-3xl font-bold mb-2">Featured Products</h2>
@@ -38,12 +38,12 @@ export const FeaturedProducts = () => {
         
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
           {products.map((product) => (
-            <div key={product.id} className="bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow overflow-hidden flex flex-col">
-              <div className="relative aspect-square p-6 bg-white flex items-center justify-center group">
+            <div key={product.id} className="bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow overflow-hidden flex flex-col w-[95%] mx-auto">
+              <div className="relative aspect-square p-6 bg-white flex items-center justify-center group h-[240px]">
                 <img 
                   src={product.image} 
                   alt={product.title}
-                  className="max-h-full max-w-full object-contain transition-transform duration-300 group-hover:scale-105"
+                  className="max-h-[70%] max-w-[80%] object-contain transition-transform duration-300 group-hover:scale-105"
                 />
                 <div className="absolute top-3 right-3 flex flex-col gap-2">
                   <button 

@@ -11,14 +11,13 @@ export const Home = () => {
   return (
     <div className="min-h-screen flex flex-col bg-white">
       <Header />
-      <main className="flex-1">
-        <Hero />
-        <Categories title="Popular Categories" />
-        <Categories title="Browse Categories" variant="browse" />
-        <BestSelling />
-        <MusicBanner />
-        <ExploreProducts />
-      </main>
+        <main className="flex-1">
+          <Hero />
+          <Categories />
+          <BestSelling />
+          <MusicBanner />
+          <ExploreProducts />
+        </main>
       <Footer />
     </div>
   );

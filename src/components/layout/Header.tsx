@@ -12,8 +12,8 @@ export const Header = () => {
   const firstName = user?.name.split(' ')[0];
 
   return (
-    <header className="sticky top-0 z-50 w-full" style={{ backgroundColor: '#7DA2F3' }}>
-      <div className="container mx-auto px-4 h-16 flex items-center justify-between text-white">
+    <div className="sticky top-0 z-50 w-full bg-white border-b border-gray-100">
+      <div className="container mx-auto px-4 h-16 flex items-center justify-between text-black">
         {/* Logo */}
         <Link to="/" className="flex items-center">
           <img src="/logo.png" alt="FLX Logo" className="h-12 object-contain" />
@@ -21,29 +21,26 @@ export const Header = () => {
 
         {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center gap-8">
-          <Link to="/" className="text-base font-medium hover:underline underline-offset-4 decoration-2">
+          <Link to="/" className="text-base font-medium hover:text-red-600 transition-colors">
             Home
           </Link>
-          <Link to="/contact" className="text-base font-medium hover:underline underline-offset-4 decoration-2">
+          <Link to="/contact" className="text-base font-medium hover:text-red-600 transition-colors">
             Contact
           </Link>
-          <Link to="/about" className="text-base font-medium hover:underline underline-offset-4 decoration-2">
+          <Link to="/about" className="text-base font-medium hover:text-red-600 transition-colors">
             About
-          </Link>
-          <Link to="/categories" className="text-base font-medium hover:underline underline-offset-4 decoration-2">
-            categories
           </Link>
         </nav>
 
         {/* Actions */}
         <div className="flex items-center gap-6">
-          <div className="hidden lg:flex items-center bg-white/20 rounded-lg px-3 py-1.5 border border-white/10 focus-within:bg-white/30 transition-all">
+          <div className="hidden lg:flex items-center bg-gray-100 rounded-lg px-3 py-1.5 border border-transparent focus-within:bg-gray-200 transition-all">
             <input 
               type="text" 
               placeholder="What are you looking for?" 
-              className="bg-transparent border-none outline-none text-sm placeholder:text-white/70 w-48"
+              className="bg-transparent border-none outline-none text-sm placeholder:text-gray-500 w-48 text-black"
             />
-            <FontAwesomeIcon icon={faSearch} className="text-white/70 text-sm ml-2" />
+            <FontAwesomeIcon icon={faSearch} className="text-gray-500 text-sm ml-2" />
           </div>
 
           <Link to="/favorites" className="hover:text-gray-200 transition-colors relative">
@@ -72,6 +69,6 @@ export const Header = () => {
           </button>
         </div>
       </div>
-    </header>
+    </div>
   );
 };

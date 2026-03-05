@@ -26,7 +26,7 @@ export const ExploreProducts = () => {
 
   return (
     <section className="py-16 mb-10">
-      <div className="container mx-auto px-4">
+      <div className="max-w-[95%] mx-auto px-4">
         <div className="mb-8">
           <div className="flex items-center gap-4 mb-4">
             <div className="w-5 h-10 bg-red-500 rounded-sm"></div>
@@ -46,10 +46,10 @@ export const ExploreProducts = () => {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 gap-y-10 w-[90%] mx-auto">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 gap-y-10 w-[95%] mx-auto">
           {products.map((product, index) => (
-            <div key={product.id} className="group">
-              <div className="relative bg-gray-100 rounded-md p-4 mb-4 h-[200px] flex items-center justify-center overflow-hidden">
+            <div key={product.id} className="group flex flex-col">
+              <div className="relative bg-gray-100 rounded-md p-4 mb-4 h-[240px] flex items-center justify-center overflow-hidden">
                 <div className="absolute top-3 right-3 flex flex-col gap-2">
                   <button 
                     onClick={() => handleToggleFavorite(product)}
@@ -71,7 +71,7 @@ export const ExploreProducts = () => {
                 <img 
                   src={product.image} 
                   alt={product.title}
-                  className="w-3/4 h-3/4 object-contain mix-blend-multiply transition-transform duration-300 group-hover:scale-110"
+                  className="max-h-[70%] max-w-[80%] object-contain mix-blend-multiply transition-transform duration-300 group-hover:scale-110"
                 />
                  {/* Buy Now Button (Shows on Hover) */}
                  <button 
@@ -83,9 +83,9 @@ export const ExploreProducts = () => {
               </div>
 
               <div className="text-center">
-                <h3 className="font-medium text-base mb-1 truncate">{product.title}</h3>
+                <h3 className="font-bold text-base mb-1 truncate text-[#1a1a1a]">{product.title}</h3>
                 <div className="flex justify-center mb-1">
-                  <span className="text-red-500 font-medium">${product.price}</span>
+                  <span className="text-red-500 font-bold">${product.price}</span>
                 </div>
               </div>
             </div>

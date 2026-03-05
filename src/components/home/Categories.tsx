@@ -1,226 +1,139 @@
-import React, { useState } from 'react';
-import { ArrowLeft, ArrowRight, Heart, Eye } from 'lucide-react';
-import { useFavorites } from '../../context/FavoritesContext';
-import { useToast } from '../../context/ToastContext';
+import React, { useEffect, useState, useRef } from 'react';
+import { 
+  Heart, 
+  Eye,
+  ChevronLeft,
+  ChevronRight
+} from 'lucide-react';
+import { api } from '../../services/api';
 import { Product } from '../../types';
 import { useNavigate } from 'react-router-dom';
+import { useFavorites } from '../../context/FavoritesContext';
+import { useToast } from '../../context/ToastContext';
 
-interface CategoriesProps {
-  title?: string;
-  variant?: 'default' | 'browse';
-}
-
-export const Categories = ({ title = "Popular Categories", variant = 'default' }: CategoriesProps) => {
-  const [startIndex, setStartIndex] = useState(0);
+export const Categories = () => {
+  const [products, setProducts] = useState<Product[]>([]);
+  const navigate = useNavigate();
   const { toggleFavorite, isFavorite } = useFavorites();
   const { addToast } = useToast();
-  const navigate = useNavigate();
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
 
-  const defaultProducts = [
-    {
-      id: 1,
-      title: "HAVIT HV-G92 Gamepad",
-      price: 120,
-      image: "https://m.media-amazon.com/images/I/61s7s+eR+JL._AC_SX679_.jpg",
-    },
-    {
-      id: 2,
-      title: "AK-900 Wired Keyboard",
-      price: 960,
-      image: "https://m.media-amazon.com/images/I/7189iXimfWL._AC_SX679_.jpg",
-    },
-    {
-      id: 3,
-      title: "IPS LCD Gaming Monitor",
-      price: 370,
-      image: "https://m.media-amazon.com/images/I/71sxlhYhKWL._AC_SX679_.jpg",
-    },
-    {
-      id: 4,
-      title: "S-Series Comfort Chair",
-      price: 375,
-      image: "https://m.media-amazon.com/images/I/61t4C3t0hLL._AC_SX679_.jpg",
-    },
-    {
-      id: 5,
-      title: "Gaming Mouse",
-      price: 80,
-      image: "https://m.media-amazon.com/images/I/61lCLrCqI-L._AC_SX679_.jpg",
-    },
-    {
-      id: 6,
-      title: "Gaming Headset",
-      price: 150,
-      image: "https://m.media-amazon.com/images/I/61CGHv6kmWL._AC_SX679_.jpg",
-    }
-  ];
+  useEffect(() => {
+    // Fetch more products to enable scrolling
+    api.getProducts().then(data => setProducts(data.slice(0, 12)));
+  }, []);
 
-  const browseProducts = [
-    {
-      id: 1,
-      title: "Gaming Accessories",
-      image: "https://m.media-amazon.com/images/I/61s7s+eR+JL._AC_SX679_.jpg",
-    },
-    {
-      id: 2,
-      title: "Keyboards",
-      image: "https://m.media-amazon.com/images/I/7189iXimfWL._AC_SX679_.jpg",
-    },
-    {
-      id: 3,
-      title: "Monitors",
-      image: "https://m.media-amazon.com/images/I/71sxlhYhKWL._AC_SX679_.jpg",
-    },
-    {
-      id: 4,
-      title: "Chairs",
-      image: "https://m.media-amazon.com/images/I/61t4C3t0hLL._AC_SX679_.jpg",
-    },
-    {
-      id: 5,
-      title: "Mice",
-      image: "https://m.media-amazon.com/images/I/61lCLrCqI-L._AC_SX679_.jpg",
-    },
-    {
-      id: 6,
-      title: "Headsets",
-      image: "https://m.media-amazon.com/images/I/61CGHv6kmWL._AC_SX679_.jpg",
-    }
-  ];
-
-  const products = variant === 'browse' ? browseProducts : defaultProducts;
-
-  const handleToggleFavorite = (product: any) => {
+  const handleToggleFavorite = (product: Product) => {
     const wasFavorite = isFavorite(product.id);
-    // Categories products are slightly different from API products, but we'll cast them for the favorites context
-    toggleFavorite(product as Product);
+    toggleFavorite(product);
     if (!wasFavorite) {
       addToast('Added to favorites');
     }
   };
 
-  const itemsPerPage = 4;
+  const scroll = (direction: 'left' | 'right') => {
+    if (scrollContainerRef.current) {
+      const container = scrollContainerRef.current;
+      const firstItem = container.firstElementChild as HTMLElement;
+      if (!firstItem) return;
 
-  const nextSlide = () => {
-    setStartIndex((prev) => 
-      prev + 1 > products.length - itemsPerPage ? 0 : prev + 1
-    );
-  };
-
-  const prevSlide = () => {
-    setStartIndex((prev) => 
-      prev - 1 < 0 ? products.length - itemsPerPage : prev - 1
-    );
+      const itemWidth = firstItem.offsetWidth + 24; // width + gap (gap-6 = 24px)
+      const scrollTo = direction === 'left' 
+        ? container.scrollLeft - itemWidth 
+        : container.scrollLeft + itemWidth;
+      
+      container.scrollTo({
+        left: scrollTo,
+        behavior: 'smooth'
+      });
+    }
   };
 
   return (
-    <section className={`py-16 ${variant === 'browse' ? 'border-b border-gray-100' : ''}`}>
-      <div className="container mx-auto px-4">
-        {/* Header */}
-        <div className="flex items-center justify-between mb-8">
-          <h2 className="text-3xl md:text-4xl font-bold text-black">{title}</h2>
-          <a href="#" className="text-blue-500 font-medium text-lg hover:underline">Browse All Product</a>
+    <section className="py-16">
+      <div className="max-w-[95%] mx-auto px-12 relative">
+        <div className="flex items-center justify-between mb-10 px-4">
+          <h2 className="text-3xl md:text-4xl font-bold text-[#1a1a1a]">Popular Categories</h2>
+          <button 
+            onClick={() => navigate('/')}
+            className="text-[#38bdf8] text-xl font-medium hover:underline"
+          >
+            Browse All Product
+          </button>
         </div>
 
-        {/* Carousel Container */}
-        <div className="relative px-12"> {/* Added padding for arrows */}
-          {/* Product Grid Window */}
-          <div className="overflow-hidden">
+        <div className="relative group">
+          {/* Navigation Arrows - Positioned outside the cards with a margin */}
+          <button 
+            onClick={() => scroll('left')}
+            className="absolute -left-10 top-[120px] -translate-y-1/2 w-10 h-10 rounded-full bg-white flex items-center justify-center shadow-md hover:bg-gray-100 transition-colors z-20 border border-gray-100"
+            aria-label="Previous"
+          >
+            <ChevronLeft className="w-6 h-6 text-gray-600" />
+          </button>
+          <button 
+            onClick={() => scroll('right')}
+            className="absolute -right-10 top-[120px] -translate-y-1/2 w-10 h-10 rounded-full bg-white flex items-center justify-center shadow-md hover:bg-gray-100 transition-colors z-20 border border-gray-100"
+            aria-label="Next"
+          >
+            <ChevronRight className="w-6 h-6 text-gray-600" />
+          </button>
+
+          {/* Products Scroll Container - Wrapped in overflow-hidden to hide partial cards */}
+          <div className="overflow-hidden px-2">
             <div 
-              className="flex transition-transform duration-500 ease-in-out"
-              style={{ transform: `translateX(-${startIndex * (100 / itemsPerPage)}%)` }}
+              ref={scrollContainerRef}
+              className="flex gap-6 overflow-x-auto scrollbar-hide scroll-smooth pb-4 snap-x snap-mandatory"
+              style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
             >
               {products.map((product) => (
                 <div 
                   key={product.id} 
-                  className="w-1/4 flex-shrink-0 px-3 group flex flex-col items-center"
+                  className="flex flex-col min-w-[calc(100%)] sm:min-w-[calc(50%-12px)] lg:min-w-[calc(25%-18px)] snap-start"
                 >
-                  {/* Card Image Container */}
-                  <div 
-                    onClick={() => variant === 'default' && handleToggleFavorite(product)}
-                    className="relative bg-gray-50 w-[90%] h-[200px] flex flex-col items-center justify-center rounded-md mb-4 group-hover:shadow-lg transition-shadow overflow-hidden cursor-pointer"
+                <div 
+                  className="relative bg-[#f5f5f5] rounded-sm h-[240px] flex items-center justify-center group/card bg-no-repeat bg-center bg-[length:85%_auto] transition-all duration-300 hover:bg-[length:90%_auto]"
+                  style={{ backgroundImage: `url(${product.image})` }}
+                >
+                  {/* Action Icons */}
+                  <div className="absolute top-4 right-4 flex flex-col gap-2">
+                    <button 
+                      onClick={() => handleToggleFavorite(product)}
+                      className="w-8 h-8 rounded-full bg-white flex items-center justify-center shadow-sm hover:bg-red-500 hover:text-white transition-all"
+                    >
+                      <Heart className={`w-4 h-4 ${isFavorite(product.id) ? 'fill-current text-red-500 hover:text-white' : 'text-gray-600'}`} />
+                    </button>
+                    <button 
+                      onClick={() => navigate(`/products/${product.id}`)}
+                      className="w-8 h-8 rounded-full bg-white flex items-center justify-center shadow-sm hover:bg-red-500 hover:text-white transition-all"
+                    >
+                      <Eye className="w-4 h-4 text-gray-600" />
+                    </button>
+                  </div>
+
+                  {/* Buy Now Button */}
+                  <button 
+                    onClick={() => navigate('/checkout', { state: { product } })}
+                    className="absolute bottom-4 left-4 right-4 bg-black text-white py-2 text-sm font-medium rounded-sm opacity-100 transition-opacity hover:bg-gray-800"
                   >
-                    {/* Icons */}
-                    {variant === 'default' && (
-                      <div className="absolute top-3 right-3 flex flex-col gap-2 z-10">
-                        <button 
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            handleToggleFavorite(product);
-                          }}
-                          className={`w-8 h-8 rounded-full flex items-center justify-center transition-all shadow-sm ${
-                            isFavorite(product.id) 
-                              ? 'bg-red-500 text-white' 
-                              : 'bg-white text-black hover:bg-red-500 hover:text-white'
-                          }`}
-                        >
-                          <Heart className={`w-4 h-4 ${isFavorite(product.id) ? 'fill-current' : ''}`} />
-                        </button>
-                        <button 
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            navigate(`/products/${product.id}`);
-                          }}
-                          className="w-8 h-8 rounded-full bg-white flex items-center justify-center hover:bg-red-500 hover:text-white transition-colors shadow-sm"
-                        >
-                          <Eye className="w-4 h-4" />
-                        </button>
-                      </div>
-                    )}
-
-                    {/* Image */}
-                    <img 
-                      src={product.image} 
-                      alt={product.title}
-                      className={`w-3/4 h-[120px] object-contain mix-blend-multiply ${variant === 'default' ? 'mb-8' : ''}`}
-                    />
-
-                    {/* Buy Now Button */}
-                    {variant === 'default' && (
-                      <button 
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          navigate('/checkout', { state: { product } });
-                        }}
-                        className="absolute bottom-0 left-0 w-full bg-black text-white py-2 text-sm font-medium opacity-100 transition-opacity hover:bg-gray-800"
-                      >
-                        Buy Now
-                      </button>
-                    )}
-                  </div>
-
-                  {/* Info */}
-                  <div className="text-center min-h-[4rem] flex flex-col items-center justify-start pt-2 w-full">
-                    <h3 className="font-bold text-base mb-1 text-gray-800 line-clamp-1">{product.title}</h3>
-                    {variant === 'default' ? (
-                      <span className="text-red-500 font-medium">${(product as any).price}</span>
-                    ) : (
-                      <button className="bg-black text-white px-4 py-2 text-sm font-medium rounded-sm hover:bg-gray-800 transition-colors mt-1 w-full max-w-[180px]">
-                        Show Classification
-                      </button>
-                    )}
-                  </div>
+                    By Now
+                  </button>
                 </div>
-              ))}
-            </div>
+
+                {/* Product Info */}
+                <div className="mt-4 text-center">
+                  <h3 className="font-bold text-base text-[#1a1a1a] mb-2 truncate px-2">{product.title}</h3>
+                  <p className="text-red-500 font-bold">${product.price}</p>
+                </div>
+              </div>
+            ))}
           </div>
-
-          {/* Navigation Arrows */}
-          <button 
-            onClick={prevSlide}
-            className="absolute left-0 top-[40%] -translate-y-1/2 w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center hover:bg-gray-200 transition-colors z-20 shadow-md"
-          >
-            <ArrowLeft className="w-5 h-5 text-black" />
-          </button>
-
-          <button 
-            onClick={nextSlide}
-            className="absolute right-0 top-[40%] -translate-y-1/2 w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center hover:bg-gray-200 transition-colors z-20 shadow-md"
-          >
-            <ArrowRight className="w-5 h-5 text-black" />
-          </button>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
   );
 };
+
+
+

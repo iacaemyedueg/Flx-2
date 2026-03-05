@@ -41,7 +41,7 @@ export const Hero = () => {
   }, [slides.length]);
 
   return (
-    <section className="container mx-auto px-4 mb-10 md:mb-20 pt-10">
+    <section className="max-w-[95%] mx-auto px-4 mb-10 md:mb-20 pt-10">
       <div className="relative overflow-hidden rounded-lg shadow-xl">
         {/* Slides Container */}
         <div 
